@@ -9,10 +9,16 @@ import matplotlib.pyplot as plt
 from tensorflow import keras
 from ns3gym import ns3env
 
+
 import argparse
 from ns3gym import ns3env
 from tcp_base import TcpTimeBased
 from tcp_newreno import TcpNewReno
+
+__author__ = "Kenan and Sharif, Modified the code by Piotr Gawlowicz"
+__copyright__ = "Copyright (c) 2020, Technische Universität Berlin"
+__version__ = "0.1.0"
+__email__ = "gawlowicz@tkn.tu-berlin.de"
 
 parser = argparse.ArgumentParser(description='Start simulation script on/off')
 parser.add_argument('--start',
@@ -109,26 +115,20 @@ U_new =0
 U =0
 U_old=0
 reward=0
-
 for e in range(total_episodes):
     obs = env.reset()
-    #print("obssssss",obs)
-
     cWnd = obs[5]
     obs = np.reshape(obs, [1, s_size])
     rewardsum = 0
     for time in range(max_env_steps):
-
         # Choose action
         if np.random.rand(1) < epsilon:
             action_index = np.random.randint(3)
-
             print (action_index)
-           # print("Value Initialization ...")
+            print("Value Initialization ...")
         else:
             action_index = np.argmax(model.predict(obs)[0])
             print(action_index)
-            
         new_cWnd = cWnd + action_mapping[action_index]
         new_ssThresh = np.int(cWnd/2)
         actions = [new_ssThresh, new_cWnd]
@@ -140,25 +140,20 @@ for e in range(total_episodes):
             reward=1
         else:
             reward=0
-
         # Step
         next_state, reward, done, info = env.step(actions)
         cWnd = next_state[5]
         print("cWnd:",cWnd)
-
         if done:
             print("episode: {}/{}, time: {}, rew: {}, eps: {:.2}"
                   .format(e, total_episodes, time, rewardsum, epsilon))
             break
         U_old=0.7*(np.log(obs[0,2]))-0.7*(np.log(obs[0,9] ))
         next_state = np.reshape(next_state, [1, s_size])
-
         # Train
         target = reward
         if not done:
             target = (reward + 0.95 * np.amax(model.predict(next_state)[0]))
-
-
         target_f = model.predict(obs)
         print("target :", target_f)
         target_f[0][action_index] = target
@@ -170,15 +165,14 @@ for e in range(total_episodes):
         rewardsum += reward
         if epsilon > epsilon_min: epsilon *= epsilon_decay
         No_step += 1
-    
+  
         print("number of steps :", No_step)
-
         print("espsilon :",epsilon)
 
   
         print("reward sum", rewardsum)
         segAkc.append(seg)
-        Rtt.append(rtt/3)
+        Rtt.append(rtt)
 
         cWnd_history.append(cWnd)
         time_history.append(time)
@@ -195,7 +189,7 @@ for e in range(total_episodes):
     #plt.plot(range(len(rew_history)), rew_history, label='Reward', marker="^", linestyle=":")#, color='red')
     plt.plot(range(len(rew_history)), rew_history, label='Reward', marker="", linestyle="-")#, color='k')
 
-    # plt.plot(range(len(segAkc)), segAkc, label='segAkc', marker="", linestyle="-"),# color='b')
+    #plt.plot(range(len(segAkc)), segAkc, label='segAkc', marker="", linestyle="-"),# color='b')
     #plt.plot(range(len(Rtt)),Rtt, label='Rtt', marker="", linestyle="-")#, color='y')
     plt.xlabel('Episode')
     plt.ylabel('Steps')
