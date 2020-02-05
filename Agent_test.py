@@ -14,12 +14,6 @@ from ns3gym import ns3env
 from tcp_base import TcpTimeBased
 from tcp_newreno import TcpNewReno
 
-__author__ = "Piotr Gawlowicz"
-__copyright__ = "Copyright (c) 2018, Technische Universität Berlin"
-__version__ = "0.1.0"
-__email__ = "gawlowicz@tkn.tu-berlin.de"
-
-
 parser = argparse.ArgumentParser(description='Start simulation script on/off')
 parser.add_argument('--start',
                     type=int,
@@ -138,8 +132,6 @@ for e in range(total_episodes):
         new_cWnd = cWnd + action_mapping[action_index]
         new_ssThresh = np.int(cWnd/2)
         actions = [new_ssThresh, new_cWnd]
-        #print("obssssss====",5*(np.log(obs[0,9]))-5*(np.log(obs[0,2] )))
-        #print("obssssss",obs[0,2],obs[0,5],obs[0,9],obs[0,10])
         U_new=0.7*(np.log(obs[0,2]))-0.7*(np.log(obs[0,9] ))
         U=U_new-U_old
         if U <-0.05:
@@ -193,49 +185,6 @@ for e in range(total_episodes):
         rew_history.append(rewardsum)
 
 
-    # print("Plot Learning Performance")
-    # mpl.rcdefaults()
-    # mpl.rcParams.update({'font.size': 16})
-
-    # fig, ax = plt.subplots(figsize=(10,4))
-    # plt.grid(True, linestyle='--')
-    # plt.title('Learning Performance')
-    # #plt.plot(range(len(time_history)), time_history, label='Step', marker="^", linestyle=":")#, color='red')
-    # plt.plot(range(len(cWnd_history)), cWnd_history, label='cWnd', marker="^", linestyle="-")#, color='k')
-
-    # # plt.plot(range(len(segAkc)), segAkc, label='segAkc', marker="", linestyle="-"),# color='b')
-    # #plt.plot(range(len(Rtt)),Rtt, label='Rtt', marker="", linestyle="-")#, color='y')
-    # plt.xlabel('Episode')
-    # plt.ylabel('cWnd')
-    # plt.legend(prop={'size': 12})
-    # plt.savefig('learning.pdf', bbox_inches='tight')
-    # plt.show()  
-
-    # cWnd_history2.append(cWnd)  
-
-
-    # fig, ax1 = plt.subplots()
-
-    # color = 'tab:red'
-    # ax1.set_xlabel('time (s)')
-    # ax1.plot(t,t, color=color)
-
-    # ax1.set_ylabel('Steps', color=color)
-    # ax1.plot(t, t, color=color)
-    # ax1.tick_params(axis='y', labelcolor=color)
-
-    # ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-
-    # color = 'tab:blue'
-    # ax2.set_ylabel('cWnd', color=color)  # we already handled the x-label with ax1
-    # ax2.plot(range(len(cWnd_history)), cWnd_history, color=color)
-    # ax2.tick_params(axis='y', labelcolor=color)
-    # plt.legend(prop={'size': 12})
-
-    # plt.savefig('learning.pdf', bbox_inches='tight')
-    # plt.show()
-    # fig.tight_layout()  # otherwise the right y-label is slightly clipped
-    # plt.show()
         
     print("Plot Learning Performance")
     mpl.rcdefaults()
@@ -255,81 +204,3 @@ for e in range(total_episodes):
     plt.show() 
 
 
-
-    # print("Plot Learning Performance")
-    # mpl.rcdefaults()
-    # mpl.rcParams.update({'font.size': 16})
-    # fig, ax1 = plt.subplots()
-    # color = 'tab:red'
-    # ax1.set_xlabel('time (s)')
-    # ax1.set_ylabel('cWnd', color=color)
-    # ax1.plot(range(len(cWnd_history)), cWnd_history, color=color)
-    # ax1.tick_params(axis='y', labelcolor=color)
-
-    # ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-
-    # color = 'tab:blue'
-    # ax2.set_ylabel('Steps', color=color)  # we already handled the x-label with ax1
-    # ax2.plot(range(len(time_history)), time_history, color=color)
-    # ax2.tick_params(axis='y', labelcolor=color)
-    # plt.legend(prop={'size': 12})
-
-    # plt.savefig('learning.pdf', bbox_inches='tight')
-    # plt.show()
-
-# print("Plot Learning Performance")
-# mpl.rcdefaults()
-# mpl.rcParams.update({'font.size': 16})
-
-# fig, ax = plt.subplots(figsize=(10,4))
-# plt.grid(True, linestyle='--')
-# plt.title('Learning Performance')
-# plt.plot(range(len(cWnd_history)), cWnd_history, label='cWnd', marker="^", linestyle=":")#, color='red')
-# plt.plot(range(len(rew_history)), rew_history, label='Reward', marker="", linestyle="-")#, color='k')
-
-# plt.plot(range(len(segAkc)), segAkc, label='segAkc', marker="", linestyle="-"),# color='b')
-# plt.plot(range(len(Rtt)),Rtt, label='Rtt', marker="", linestyle="-")#, color='y')
-# plt.xlabel('Episode')
-# plt.ylabel('Time')
-# plt.legend(prop={'size': 12})
-# plt.savefig('learning.pdf', bbox_inches='tight')
-# plt.show()
-
-
-# print("Plot Learning Performance")
-# mpl.rcdefaults()
-# mpl.rcParams.update({'font.size': 16})
-
-# fig, ax = plt.subplots(figsize=(10,4))
-# plt.grid(True, linestyle='--')
-# plt.title('Learning Performance')
-# plt.plot(range(len(time_history)), time_history, label='Steps', marker="^", linestyle=":")#, color='red')
-# plt.plot(range(len(cWnd_history)), cWnd_history, label='cWnd', marker="", linestyle="-")#, color='k')
-# plt.xlabel('Episode')
-# plt.ylabel('cWnd Size')
-# plt.legend(prop={'size': 12})
-
-# plt.savefig('learning.pdf', bbox_inches='tight')
-# plt.show()
-    
-
-# fig, ax1 = plt.subplots()
-
-# color = 'tab:red'
-# ax1.set_xlabel('time (s)')
-# ax1.set_ylabel('cWnd', color=color)
-# ax1.plot(range(len(cWnd_history)), cWnd_history, color=color)
-# ax1.tick_params(axis='y', labelcolor=color)
-
-# ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-
-# color = 'tab:blue'
-# ax2.set_ylabel('Steps', color=color)  # we already handled the x-label with ax1
-# ax2.plot(range(len(time_history)), time_history, color=color)
-# ax2.tick_params(axis='y', labelcolor=color)
-# plt.legend(prop={'size': 12})
-
-# plt.savefig('learning.pdf', bbox_inches='tight')
-# plt.show()
-# fig.tight_layout()  # otherwise the right y-label is slightly clipped
-# plt.show()
