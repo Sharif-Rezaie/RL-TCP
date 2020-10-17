@@ -1,6 +1,6 @@
 # RL-TCP
 For years, TCP has been explored and discussed for end-to-end congestion control mechanisms. Although, various efforts and optimization techniques have taken place to find an optimal approach in dealing with all kinds of network architecture and scenarios. But the TCP version only follows the rules which they are defined by. The rule-based approach takes no consideration of the previous information of  the links every time a flow begins,whereas a better performance can be accomplished if TCP can adapt its attitude based on prior learned  information when the same path was before experienced. The rising of machine learning and deep learning paves the way for many  researchers in academia. These approaches rather learn from history to find the best way and methods to get the job done.<br/>
-This project discusses the implementation of Reinforcement Learning (RL) based TCP congestion control python Agent which uses RL based techniques to somehow overcome the rule-based shortcomings of TCP.
+This project discusses the implementation of Reinforcement Learning (RL) based TCP congestion control using python Agent which uses RL based techniques to somehow overcome the rule-based shortcomings of TCP.
 
 ## RL Tools
 The following RL tools are used for the implementation of the project.
